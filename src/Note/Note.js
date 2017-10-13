@@ -5,14 +5,20 @@ import PropTypes from 'prop-types';
 export class Note extends Component {
   constructor(props){
     super(props);
-    this.message = "hello from the note Component";
+    this.noteContent = props.noteContent;
+    this.noteId = props.noteId;
+
   }
 
   render(props) {
     return(
-      <div>
-       <h1>{this.message}</h1>
+      <div className="note">
+       <p className="note-content">{this.noteContent}</p>
       </div>
     );
   }
 }
+
+Note.propTypes = {
+  noteContent: PropTypes.string
+};
