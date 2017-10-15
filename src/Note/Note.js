@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Note.css';
 import PropTypes from 'prop-types';
 
-export class Note extends Component {
+class Note extends Component {
   constructor(props){
     super(props);
     this.noteContent = props.noteContent;
@@ -22,3 +22,5 @@ export class Note extends Component {
 Note.propTypes = {
   noteContent: PropTypes.string
 };
+
+export default Note;

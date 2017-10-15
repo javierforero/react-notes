@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Note } from './Note/Note';
+import  Note from './Note/Note';
 
 class App extends Component {
 
@@ -28,8 +28,8 @@ class App extends Component {
               );
             })
           }
-
         </div>
+        <div className="footer">Footer</div>
       </div>
     );
   }
