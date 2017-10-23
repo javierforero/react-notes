@@ -10,6 +10,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.addNote = this.addNote.bind(this);
+    this.removeNote = this.removeNote.bind(this);
     this.app = firebase.initializeApp(DB_CONFIG);
     this.database = this.app.database().ref().child('notes');
 
@@ -26,7 +27,21 @@ class App extends Component {
         id: snap.key,
         noteContent: snap.val().noteContent
       })
-      
+
+      this.setState({
+        notes: previousNotes
+      });
+    });
+
+    // this updates the frontend when the database is affected
+    this.database.on('child_removed', snap => {
+  
+      for(let i = 0; i < previousNotes.length; i++) {
+        if(previousNotes[i].id === snap.key) {
+          previousNotes.splice(i, 1);
+        }
+      }
+      // updates state after deleting
       this.setState({
         notes: previousNotes
       });
@@ -37,6 +52,10 @@ class App extends Component {
     this.database.push().set({noteContent: note});
   }
 
+  removeNote(noteId) {
+    this.database.child(noteId).remove();
+  }
+
   render() {
     return (
       <div className="note-wrapper">
@@ -45,7 +64,7 @@ class App extends Component {
           {
             this.state.notes.map((note) => {
               return (
-                <Note noteContent={note.noteContent} noteId={note.id} key={note.id}/>
+                <Note noteContent={note.noteContent} noteId={note.id} key={note.id} removeNote={this.removeNote}/>
               )
             })
           }
